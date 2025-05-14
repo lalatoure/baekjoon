@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+int vcount;
+bool edge[101][101];
+bool visited[101];
+void dfs(int v,int num_vertex) {
+	visited[v] = 1;
+	vcount++;
+	for (int i = 1; i <= 100; i++) {
+		if (edge[v][i]&&!visited[i]) {
+			dfs(i,num_vertex);
+			
+		}
+	}
+}
+int main() {
+	int v, e;
+	cin >> v >> e;
+
+	int a, b;
+	for (int i = 0; i < e; i++) {
+		cin >> a >> b;
+		edge[a][b] = 1;
+		edge[b][a] = 1;
+	}
+	dfs(1, v);
+	vcount--;
+	cout << vcount;
+}
