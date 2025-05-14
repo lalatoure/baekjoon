@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <malloc.h>
+
+struct Item
+{
+    int val;
+    struct Item* next;
+};
+
+struct Stack
+{
+    struct Item* top;
+    int size; //필요없음.
+};
+
+struct Item* new_item(int val)
+{
+    // make new item
+    struct Item* it = malloc(sizeof(struct Item));
+    // initializing
+    it->val = 0;
+    it->next = NULL;
+    //return item
+    return it;
+}
+
+struct Stack* new_stack()
+{
+    // make new stack
+    struct Stack* s = malloc(sizeof(struct Stack));
+    // initializing
+    s->size = 0;
+    // return stack 
+    s->top = NULL;
+    return s;
+}
+
+int size(struct Stack* s)
+{
+    struct Item* p = s->top;
+    int cnt = 0;
+    while (p != NULL) {
+        cnt++;
+        p = p->next;
+    }
+    // return stack size
+    return cnt;
+}
+
+int empty(struct Stack* s)
+{
+    // if stack is empty return 1 else return 0
+    return (s->top == -1);
+}
+
+int top(struct Stack* s)
+{
+    // return top of stack 
+    return s->top;
+}
+
+void push(struct Stack* s, int val)
+{   
+    struct Item* ni = new_item(val);
+    ni->next = s->top;
+    s->top = ni;
+    // push to stack 
+    s->size++;
+}
+
+int pop(struct Stack* s)
+{
+    // pop and return the value of stack
+    if (empty(s))
+        return -1;
+    int val = s->top->val;
+    struct Item* temp = s->top;
+    s->top = s->top->next;
+    free(temp);
+    return val;
+}
+
+int main()
+{
+    struct Stack* s = new_stack();
+    int i, n = 5;
+    printf("Size, Pushed item\n");
+    for (i = 0; i < n; i++)
+    {
+        push(s, i * 10);
+        printf("%4d, %11d\n", size(s), top(s));
+    }
+    printf("Size,  Poped item\n");
+    while (!empty(s))
+    {
+        printf("%4d, %11d\n", size(s), pop(s));
+    }
+
+    return 0;
+}
