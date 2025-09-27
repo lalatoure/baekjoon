@@ -1,0 +1,24 @@
+use std::io;
+fn main() {
+    let mut num = String::new();
+    io::stdin().read_line(&mut num);
+    let mut Ninput:i32 = num.trim().parse().expect("fail");
+    loop{
+        if Ninput == 0{
+            break
+        }
+        let mut iinput = String::new();
+        io::stdin().read_line(&mut iinput);
+        let nums: Vec<i32> = iinput
+            .trim()
+            .split_whitespace()
+            .map(|x| x.parse().expect("fail"))
+            .collect();
+
+        let x = nums[0];
+        let y = nums[1];
+
+        println!("{}",x+y);
+        Ninput-=1;
+    }
+}
